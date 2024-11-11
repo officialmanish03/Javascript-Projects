@@ -1,29 +1,28 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const choices = ['stone', 'paper', 'scissors'];
+    const buttons = document.querySelectorAll('button');
+    const resultDiv = document.getElementById('result');
 
-.game-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const playerChoice = button.id;
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            const result = determineWinner(playerChoice, computerChoice);
+            resultDiv.textContent = `You chose ${playerChoice}. The computer chose ${computerChoice}. ${result}`;
+        });
+    });
 
-.choices button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#result {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
+    function determineWinner(player, computer) {
+        if (player === computer) {
+            return "It's a tie!";
+        } else if (
+            (player === 'stone' && computer === 'scissors') ||
+            (player === 'paper' && computer === 'stone') ||
+            (player === 'scissors' && computer === 'paper')
+        ) {
+            return 'You win!';
+        } else {
+            return 'You lose!';
+        }
+    }
+});
